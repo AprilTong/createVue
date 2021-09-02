@@ -32,7 +32,7 @@ vueProject
   |-index.html
 ```
 
-- 首先书写==weboack.base.js==文件，存放开发环境和生产环境通用配置
+-   首先书写==weboack.base.js==文件，存放开发环境和生产环境通用配置
 
 ```
 const webpack = require('webpack');
@@ -51,7 +51,7 @@ module.exports = {
 
 ```
 
-- 接下来书写==weboack.dev.js==文件，存放开发环境配置
+-   接下来书写==weboack.dev.js==文件，存放开发环境配置
 
 ```
 const merge = require('webpack-merge');
@@ -79,7 +79,7 @@ module.exports = merge(common, {
 
 ```
 
-- 接下来书写==weboack.dev.js==文件，存放生产环境配置
+-   接下来书写==weboack.dev.js==文件，存放生产环境配置
 
 ```
 const path = require('path');
@@ -99,7 +99,7 @@ module.exports = merge(common, {
 
 ```
 
-- index.js 文件（先通过==npm i vue --save==安装 vue）
+-   index.js 文件（先通过==npm i vue --save==安装 vue）
 
 ```
 import Vue from 'vue';
@@ -111,7 +111,7 @@ new Vue({
 
 ```
 
-- app.vue 文件
+-   app.vue 文件
 
 ```
 <template>
@@ -127,7 +127,7 @@ export default {
 </script>
 ```
 
-- index.html 文件
+-   index.html 文件
 
 ```
 <!-- index.html -->
@@ -143,8 +143,8 @@ export default {
 </html>
 ```
 
-- 安装 vue 和 html 相关插件
-  执行命令
+-   安装 vue 和 html 相关插件
+    执行命令
 
 ```
 npm i vue-loader vue-template-compiler html-webpack-plugin --save-dev
@@ -186,7 +186,7 @@ module.exports = {
 
 ```
 
-- 创建 npm 命令（==package.json==文件中）
+-   创建 npm 命令（==package.json==文件中）
 
 ```
 // 运行代码npm start，打包执行npm run build
@@ -294,8 +294,8 @@ module.exports = {
 
 ###### 打包优化（修改 webpack.prod.js）
 
-- 处理每次重新打包，dist 目录文件夹文件没有清除的情况
-  安装插件 clean-webpack-plugin
+-   处理每次重新打包，dist 目录文件夹文件没有清除的情况
+    安装插件 clean-webpack-plugin
 
 ```
 npm install clean-webpack-plugin --save -dev
@@ -309,9 +309,9 @@ plugins: [
 
 ```
 
-- 分离 css
-  webpack4 中使用 mini-css-extract-plugin 插件来分离 css。
-  安装插件 mini-css-extract-plugin
+-   分离 css
+    webpack4 中使用 mini-css-extract-plugin 插件来分离 css。
+    安装插件 mini-css-extract-plugin
 
 ```
 npm install mini-css-extract-plugin --save -dev
@@ -351,8 +351,8 @@ module.exports = merge(common, {
 })
 ```
 
-- 图片压缩
-  安装插件 image-webpack-loader
+-   图片压缩
+    安装插件 image-webpack-loader
 
 ```
 npm install image-webpack-loader --save -dev
@@ -393,10 +393,10 @@ npm install image-webpack-loader --save -dev
 }
 ```
 
-- 使用 Happypack 多进程加快编译速度
-  Happypack 的作用是将文件解析任务分解成多个子进程并发执行，子进程处理完成任务后再将结果发送给主线程。
-  Happypack 开发和生产环境都可以用到，在 wenpack.base 中修改
-  安装插件 happypack
+-   使用 Happypack 多进程加快编译速度
+    Happypack 的作用是将文件解析任务分解成多个子进程并发执行，子进程处理完成任务后再将结果发送给主线程。
+    Happypack 开发和生产环境都可以用到，在 wenpack.base 中修改
+    安装插件 happypack
 
 ```
 npm install happypack --save -dev
@@ -432,7 +432,7 @@ plugins: [
 ]
 ```
 
-- 代码分离，一些不常变化的文件(webpack.prod.js 修改)
+-   代码分离，一些不常变化的文件(webpack.prod.js 修改)
 
 ```
 optimization: {
@@ -450,7 +450,7 @@ optimization: {
   }
 ```
 
-- 压缩 css 和 js
+-   压缩 css 和 js
 
 ```
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
@@ -464,6 +464,9 @@ optimization: {
   ]
   },
 ```
+
+-   dll 优化，对于基本不变的第三方库(vue 等)和自己写的代码分开
+    具体代码查看 build/webpack.dll.js 文件
 
 ###### vue 相关开发
 
@@ -480,4 +483,25 @@ npm install --save-dev @babel/plugin-syntax-dynamic-import
 {
   "plugins": ["@babel/plugin-syntax-dynamic-import"]
 }
+```
+
+##### 开发
+
+```
+# 克隆项目
+git clone https://github.com/AprilTong/createVue.git
+
+# 进入文件夹
+cd createVue
+
+# 安装依赖
+npm install
+没有dll 文件夹可以先执行 npm run dll // DllPlugin结合DllRefrencePlugin插件的运用，对将要产出的bundle文件进行拆解打包(第三方库和自己写的代码可以分开打包)，可以很彻底地加快webpack的打包速度，从而在开发过程中极大地缩减构建时间。
+
+# 进入开发
+npm run start
+
+# 打包
+npm run build
+
 ```
